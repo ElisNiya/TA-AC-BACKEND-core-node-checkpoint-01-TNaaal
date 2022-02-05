@@ -44,3 +44,34 @@ Use fs module for above operations. Make sure to save users who have unique user
 #### Bonus
 
 7. handle GET request on "/users" which should list all contacts into a webpage
+
+
+var path = require('path')
+
+
+var indexPath = path.join(__dirname, 'index.html')
+
+var http= require('http') 
+
+var server = http.createServer(handleRequest) 
+
+
+
+function handleRequest(req, res){ 
+
+if(req.method === 'POST' && req.url ==='/){ 
+  var store = ''; 
+  req.on('data',(chunk) => { 
+  store += chunk })
+  .on('end', () => {
+    res.statusCode = 201;
+    var parsedData = qs.parse(store)
+    res.end(JSON.stringify(parsedData))
+  }); 
+}
+
+  
+
+
+server.listen(5000)
+
